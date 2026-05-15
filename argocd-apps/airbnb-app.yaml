@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: airbnb
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/my-airbnb/k8s-manifests
+    targetRevision: infra
+    path: .
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: airbnb
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

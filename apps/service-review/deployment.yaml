@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-review
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-review
+  template:
+    metadata:
+      labels:
+        app: service-review
+    spec:
+      containers:
+        - name: service-review
+          image: ghcr.io/my-airbnb/service-reviewatest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: service-review-config
+            - secretRef:
+                name: service-review-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 5

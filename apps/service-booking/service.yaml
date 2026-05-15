@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-booking
+  namespace: airbnb
+spec:
+  selector:
+    app: service-booking
+  ports:
+    - port: 8083
+      targetPort: 8080
+  type: ClusterIP

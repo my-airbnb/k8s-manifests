@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-auth-config
+  namespace: airbnb
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/auth_db"
+  SPRING_DATASOURCE_USERNAME: "airbnb"
+  SPRING_REDIS_HOST: "redis"
+  SPRING_REDIS_PORT: "6379"
+  SERVER_PORT: "8080"
+  SPRING_PROFILES_ACTIVE: "prod"

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: airbnb
+data:
+  NEXT_PUBLIC_API_URL: "http://your-domain.com"
+  NODE_ENV: "production"

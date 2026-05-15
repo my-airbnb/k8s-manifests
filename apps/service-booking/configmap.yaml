@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-booking-config
+  namespace: airbnb
+data:
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/airbnb_db"
+  SPRING_DATASOURCE_USERNAME: "airbnb"
+  SERVER_PORT: "8080"
+  SPRING_PROFILES_ACTIVE: "prod"
+  JWT_SECRET_URL: "http://service-auth:8081"
