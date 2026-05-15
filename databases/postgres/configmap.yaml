@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  namespace: airbnb
+data:
+  POSTGRES_DB: "airbnb_db"
+  POSTGRES_USER: "airbnb"
