@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-seeder
+  namespace: airbnb
+spec:
+  selector:
+    app: data-seeder
+  ports:
+    - port: 8086
+      targetPort: 8086
+  type: ClusterIP

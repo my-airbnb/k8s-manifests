@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-seeder
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-seeder
+  template:
+    metadata:
+      labels:
+        app: data-seeder
+    spec:
+      containers:
+        - name: data-seeder
+          image: ghcr.io/my-airbnb/data-seeder:latest
+          ports:
+            - containerPort: 8086
+          envFrom:
+            - configMapRef:
+                name: data-seeder-config
+            - secretRef:
+                name: data-seeder-secret
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "200m"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8086
+            initialDelaySeconds: 30
+            periodSeconds: 10
