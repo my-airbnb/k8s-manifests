@@ -4,7 +4,7 @@ metadata:
   name: service-auth
   namespace: airbnb
 spec:
-  replicas: 0
+  replicas: 1
   selector:
     matchLabels:
       app: service-auth
