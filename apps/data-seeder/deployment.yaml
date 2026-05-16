@@ -6,7 +6,7 @@ metadata:
 spec:
   imagePullSecrets:
   - name: ghcr-pull-secret
-  replicas: 1
+  replicas: 0
   selector:
     matchLabels:
       app: data-seeder
