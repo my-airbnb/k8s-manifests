@@ -4,8 +4,8 @@ metadata:
   name: data-seeder
   namespace: airbnb
 spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
+  imagePullSecrets:
+  - name: ghcr-pull-secret
   replicas: 1
   selector:
     matchLabels:

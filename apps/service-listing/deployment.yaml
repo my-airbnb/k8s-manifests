@@ -4,8 +4,8 @@ metadata:
   name: service-listing
   namespace: airbnb
 spec:
-      imagePullSecrets:
-        - name: ghcr-pull-secret
+  imagePullSecrets:
+  - name: ghcr-pull-secret
   replicas: 1
   selector:
     matchLabels:
