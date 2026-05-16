@@ -4,8 +4,6 @@ metadata:
   name: service-chat
   namespace: airbnb
 spec:
-  imagePullSecrets:
-  - name: ghcr-pull-secret
   replicas: 1
   selector:
     matchLabels:
@@ -19,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-chat
-          image: ghcr.io/my-airbnb/service-chatatest
+          image: ghcr.io/my-airbnb/service-chat:latest
           ports:
             - containerPort: 8080
           envFrom:

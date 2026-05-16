@@ -4,8 +4,6 @@ metadata:
   name: service-review
   namespace: airbnb
 spec:
-  imagePullSecrets:
-  - name: ghcr-pull-secret
   replicas: 1
   selector:
     matchLabels:
@@ -19,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-review
-          image: ghcr.io/my-airbnb/service-reviewatest
+          image: ghcr.io/my-airbnb/service-review:latest
           ports:
             - containerPort: 8080
           envFrom:
