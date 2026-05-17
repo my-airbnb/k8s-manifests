@@ -32,6 +32,12 @@ spec:
           volumeMounts:
             - name: mongodb-data
               mountPath: /data/db
+            - name: init-scripts
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-scripts
+          configMap:
+            name: mongodb-init-scripts
   volumeClaimTemplates:
     - metadata:
         name: mongodb-data
