@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: data-seeder-upload-ingress
+  namespace: airbnb
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # Allow large CSV.gz uploads (Inside Airbnb detailed files are ~40-50 MB)
+    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "300"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "300"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - airbb.serghini.me
+      secretName: airbb-serghini-me-tls
+  rules:
+    - host: airbb.serghini.me
+      http:
+        paths:
+          - path: /api/v1/seed/upload
+            pathType: Prefix
+            backend:
+              service:
+                name: data-seeder
+                port:
+                  number: 8086
