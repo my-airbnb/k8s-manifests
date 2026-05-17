@@ -3,12 +3,16 @@ kind: Application
 metadata:
   name: airbnb
   namespace: argocd
+  # No cascade-delete finalizer — deleting this CR leaves cluster resources intact
+  finalizers: []
 spec:
   project: default
   source:
     repoURL: https://github.com/my-airbnb/k8s-manifests
     targetRevision: infra
     path: .
+    directory:
+      recurse: true
   destination:
     server: https://kubernetes.default.svc
     namespace: airbnb
@@ -18,3 +22,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
