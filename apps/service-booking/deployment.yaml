@@ -25,6 +25,8 @@ spec:
                 name: service-booking-config
             - secretRef:
                 name: service-booking-secret
+            - secretRef:
+                name: rabbitmq-app-secret
           resources:
             requests:
               memory: "256Mi"

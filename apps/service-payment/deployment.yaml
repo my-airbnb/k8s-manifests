@@ -25,6 +25,8 @@ spec:
                 name: service-payment-config
             - secretRef:
                 name: service-payment-secret
+            - secretRef:
+                name: rabbitmq-app-secret
           resources:
             requests:
               memory: "256Mi"

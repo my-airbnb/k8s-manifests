@@ -25,6 +25,8 @@ spec:
                 name: service-review-config
             - secretRef:
                 name: service-review-secret
+            - secretRef:
+                name: rabbitmq-app-secret
           resources:
             requests:
               memory: "256Mi"
