@@ -14,6 +14,9 @@ spec:
       containers:
         - name: seeder
           image: ghcr.io/my-airbnb/data-seeder:dev-143fdbdc307a8c543a20cb6ddad954edcca0ce94
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
           command: ["python3", "-c"]
           args:
             - |
