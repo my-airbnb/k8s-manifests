@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: airbnb
   namespace: argocd
-  # No cascade-delete finalizer — deleting this CR leaves cluster resources intact
-  finalizers: []
 spec:
   project: default
   source:
