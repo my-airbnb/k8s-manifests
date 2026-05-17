@@ -39,4 +39,5 @@ spec:
               path: /health
               port: 8086
             initialDelaySeconds: 30
-            periodSeconds: 10
+            periodSeconds: 30
+            failureThreshold: 10
