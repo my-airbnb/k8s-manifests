@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: image-pruner
+  namespace: kube-system
+spec:
+  schedule: "0 3 * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          tolerations:
+            - operator: Exists
+          containers:
+            - name: image-pruner
+              image: alpine:3.19
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "=== Before prune ==="
+                  /usr/local/bin/crictl --runtime-endpoint unix:///run/k3s/containerd/containerd.sock images | tail -1
+                  /usr/local/bin/crictl --runtime-endpoint unix:///run/k3s/containerd/containerd.sock rmi --prune
+                  echo "=== After prune ==="
+                  /usr/local/bin/crictl --runtime-endpoint unix:///run/k3s/containerd/containerd.sock images | tail -1
+              securityContext:
+                privileged: true
+              volumeMounts:
+                - name: containerd-sock
+                  mountPath: /run/k3s/containerd/containerd.sock
+                - name: crictl-bin
+                  mountPath: /usr/local/bin/crictl
+                  readOnly: true
+          volumes:
+            - name: containerd-sock
+              hostPath:
+                path: /run/k3s/containerd/containerd.sock
+                type: Socket
+            - name: crictl-bin
+              hostPath:
+                path: /usr/local/bin/crictl
+                type: File
