@@ -68,6 +68,13 @@ spec:
                 name: service-chat
                 port:
                   number: 8085
+          - path: /api/v1/seed
+            pathType: Prefix
+            backend:
+              service:
+                name: data-seeder
+                port:
+                  number: 8086
           - path: /
             pathType: Prefix
             backend:
