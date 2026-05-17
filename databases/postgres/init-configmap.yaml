@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-scripts
+  namespace: airbnb
+data:
+  01-create-databases.sql: |
+    CREATE DATABASE auth_db OWNER airbnb;
+    CREATE DATABASE review_db OWNER airbnb;
