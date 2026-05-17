@@ -38,7 +38,8 @@ spec:
               memory: "512Mi"
               cpu: "500m"
           readinessProbe:
-            exec:
-              command: ["rabbitmq-diagnostics", "check_port_connectivity"]
+            tcpSocket:
+              port: 5672
             initialDelaySeconds: 30
             periodSeconds: 10
+            timeoutSeconds: 5
