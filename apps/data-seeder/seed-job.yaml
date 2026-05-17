@@ -13,7 +13,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: seeder
-          image: ghcr.io/my-airbnb/data-seeder:dev-2a28dd6f5b6b0e7fad89de2fee0fddabc1bf5e71
+          image: ghcr.io/my-airbnb/data-seeder:dev-cf4a349026749d136d9bf4daf6e4e96142e1d4ee
           command: ["python3", "-c"]
           args:
             - |
@@ -33,5 +33,5 @@ spec:
               memory: "256Mi"
               cpu: "200m"
             limits:
-              memory: "512Mi"
+              memory: "1Gi"
               cpu: "500m"
