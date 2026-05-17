@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-booking
-          image: ghcr.io/my-airbnb/service-booking:dev-d04a6b428e201b68eed450f1d0b110dd0a9b66a8
+          image: ghcr.io/my-airbnb/service-booking:dev-a623fd2e8a6519f2908afd4117e8b6b854eeb407
           ports:
             - containerPort: 8080
           envFrom:
