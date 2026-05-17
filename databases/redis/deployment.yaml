@@ -18,7 +18,7 @@ spec:
           image: redis:7-alpine
           ports:
             - containerPort: 6379
-          command: ["redis-server", "--appendonly", "yes"]
+          command: ["redis-server", "--appendonly", "yes", "--requirepass", "CHANGE_ME"]
           resources:
             requests:
               memory: "128Mi"

@@ -7,3 +7,7 @@ data:
   SERVER_PORT: "8080"
   SPRING_PROFILES_ACTIVE: "prod"
   SPRING_ELASTICSEARCH_URIS: "http://elasticsearch:9200"
+  SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:CHANGE_ME@mongodb:27017/listing_db?authSource=admin"
+  SPRING_DATA_REDIS_HOST: "redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_DATA_REDIS_PASSWORD: "CHANGE_ME"
