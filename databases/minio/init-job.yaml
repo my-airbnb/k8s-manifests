@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: minio-init
+  namespace: airbnb
+spec:
+  backoffLimit: 10
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: mc
+          image: minio/mc:latest
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              until mc alias set minio http://minio:9000 minioadmin minioadmin123; do
+                echo "Waiting for MinIO..."; sleep 3
+              done
+              mc mb --ignore-existing minio/listings
+              mc anonymous set download minio/listings
+              echo "MinIO bucket ready."

@@ -4,5 +4,9 @@ metadata:
   name: frontend-config
   namespace: airbnb
 data:
-  NEXT_PUBLIC_API_URL: "http://your-domain.com"
+  NEXT_PUBLIC_API_URL: "/api/v1"
   NODE_ENV: "production"
+  MINIO_ENDPOINT: "http://minio:9000"
+  MINIO_ACCESS_KEY: "minioadmin"
+  MINIO_SECRET_KEY: "minioadmin123"
+  MINIO_PUBLIC_URL: "https://airbb.serghini.me/storage"
