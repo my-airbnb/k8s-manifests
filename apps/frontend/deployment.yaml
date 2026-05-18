@@ -32,6 +32,9 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          volumeMounts:
+            - name: next-cache
+              mountPath: /app/.next/cache
           livenessProbe:
             httpGet:
               path: /
@@ -44,3 +47,6 @@ spec:
               port: 3000
             initialDelaySeconds: 15
             periodSeconds: 5
+      volumes:
+        - name: next-cache
+          emptyDir: {}
