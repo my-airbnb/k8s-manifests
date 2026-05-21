@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: service-review-pdb
+  namespace: airbnb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: service-review
