@@ -10,3 +10,5 @@ data:
   MINIO_ACCESS_KEY: "minioadmin"
   MINIO_SECRET_KEY: "minioadmin123"
   MINIO_PUBLIC_URL: "https://airbb.serghini.me/storage"
+  LISTING_SERVICE_URL: "http://service-listing:8082"
+  REVIEW_SERVICE_URL: "http://service-review:8086"
