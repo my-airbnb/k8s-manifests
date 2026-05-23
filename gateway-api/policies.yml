@@ -3,7 +3,7 @@
 # Replaces: nginx.ingress.kubernetes.io/backend-protocol: HTTPS
 # Tells the Gateway to use TLS when connecting TO the argocd-server backend.
 # Requires experimental channel CRDs.
-apiVersion: gateway.networking.k8s.io/v1alpha3
+apiVersion: gateway.networking.k8s.io/v1
 kind: BackendTLSPolicy
 metadata:
   name: argocd-backend-tls
