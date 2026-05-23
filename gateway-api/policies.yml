@@ -1,25 +1,4 @@
 ---
-# BackendTLSPolicy for ArgoCD
-# Replaces: nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-# Tells the Gateway to use TLS when connecting TO the argocd-server backend.
-# Requires experimental channel CRDs.
-apiVersion: gateway.networking.k8s.io/v1
-kind: BackendTLSPolicy
-metadata:
-  name: argocd-backend-tls
-  namespace: argocd
-spec:
-  targetRefs:
-    - group: ""
-      kind: Service
-      name: argocd-server
-  validation:
-    # ArgoCD uses a self-signed cert by default — change to caCertificateRefs
-    # if you have a custom CA, or keep System if it has a valid public cert.
-    wellKnownCACertificates: System
-    hostname: argocd.airbb.serghini.me
-
----
 # ClientSettingsPolicy — body size limits per route group
 # Replaces: nginx.ingress.kubernetes.io/proxy-body-size
 # Standard routes: 20m
