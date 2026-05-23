@@ -1,0 +1,52 @@
+---
+# BackendTLSPolicy for ArgoCD
+# Replaces: nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+# Tells the Gateway to use TLS when connecting TO the argocd-server backend.
+# Requires experimental channel CRDs.
+apiVersion: gateway.networking.k8s.io/v1alpha3
+kind: BackendTLSPolicy
+metadata:
+  name: argocd-backend-tls
+  namespace: argocd
+spec:
+  targetRefs:
+    - group: ""
+      kind: Service
+      name: argocd-server
+  validation:
+    # ArgoCD uses a self-signed cert by default — change to caCertificateRefs
+    # if you have a custom CA, or keep System if it has a valid public cert.
+    wellKnownCACertificates: System
+    hostname: argocd.airbb.serghini.me
+
+---
+# ClientSettingsPolicy — body size limits per route group
+# Replaces: nginx.ingress.kubernetes.io/proxy-body-size
+# Standard routes: 20m
+apiVersion: gateway.nginx.org/v1alpha1
+kind: ClientSettingsPolicy
+metadata:
+  name: default-body-size
+  namespace: airbnb
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: airbnb-route
+  body:
+    maxSize: 20m
+
+---
+# Upload route gets its own larger limit: 200m
+apiVersion: gateway.nginx.org/v1alpha1
+kind: ClientSettingsPolicy
+metadata:
+  name: upload-body-size
+  namespace: airbnb
+spec:
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: data-seeder-upload-route
+  body:
+    maxSize: 200m

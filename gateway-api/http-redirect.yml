@@ -1,0 +1,19 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: http-redirect
+  namespace: airbnb
+spec:
+  parentRefs:
+    - name: main-gateway
+      namespace: airbnb
+      sectionName: http
+  hostnames:
+    - "airbb.serghini.me"
+    - "argocd.airbb.serghini.me"
+  rules:
+    - filters:
+        - type: RequestRedirect
+          requestRedirect:
+            scheme: https
+            statusCode: 301

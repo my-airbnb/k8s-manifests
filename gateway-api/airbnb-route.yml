@@ -1,0 +1,86 @@
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: airbnb-route
+  namespace: airbnb
+spec:
+  parentRefs:
+    - name: main-gateway
+      namespace: airbnb
+      sectionName: https-airbb
+  hostnames:
+    - "airbb.serghini.me"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/auth
+      backendRefs:
+        - name: service-auth
+          port: 8081
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/listings
+      backendRefs:
+        - name: service-listing
+          port: 8082
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/bookings
+      backendRefs:
+        - name: service-booking
+          port: 8083
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/payments
+      backendRefs:
+        - name: service-payment
+          port: 8084
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/conversations
+      backendRefs:
+        - name: service-chat
+          port: 8085
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/reviews
+      backendRefs:
+        - name: service-review
+          port: 8086
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /ws
+      backendRefs:
+        - name: service-chat
+          port: 8085
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/seed
+      backendRefs:
+        - name: data-seeder
+          port: 8086
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+      backendRefs:
+        - name: frontend
+          port: 3000

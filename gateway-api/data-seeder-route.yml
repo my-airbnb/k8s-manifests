@@ -1,0 +1,22 @@
+---
+
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: data-seeder-upload-route
+  namespace: airbnb
+spec:
+  parentRefs:
+    - name: main-gateway
+      namespace: airbnb
+      sectionName: https-airbb
+  hostnames:
+    - "airbb.serghini.me"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/seed/upload
+      backendRefs:
+        - name: data-seeder
+          port: 8086
