@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: frontend-next-cache
+  namespace: airbnb
+spec:
+  # local-path is ReadWriteOnce; on single-node k3s all frontend replicas
+  # schedule on the same node and share this volume, so the Next.js image
+  # optimizer cache (/app/.next/cache) survives pod restarts and deploys.
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  storageClassName: local-path

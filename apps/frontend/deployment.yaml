@@ -49,4 +49,5 @@ spec:
             periodSeconds: 5
       volumes:
         - name: next-cache
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: frontend-next-cache
