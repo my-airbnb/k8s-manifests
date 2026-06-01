@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-chat
-          image: ghcr.io/my-airbnb/service-chat:dev-1c63713cb5752962041e6dcb3350e0a22f0a72e4
+          image: ghcr.io/my-airbnb/service-chat:dev-6883ccd23ff389440f4405ab93932647f9359660
           ports:
             - containerPort: 8080
           envFrom:
