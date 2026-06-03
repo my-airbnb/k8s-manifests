@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: data-seeder
-          image: ghcr.io/my-airbnb/data-seeder:dev-143fdbdc307a8c543a20cb6ddad954edcca0ce94
+          image: ghcr.io/my-airbnb/data-seeder:dev-6bf5322bd7c269cc84e6cfdd3ec7231603c162b9
           ports:
             - containerPort: 8086
           envFrom:
