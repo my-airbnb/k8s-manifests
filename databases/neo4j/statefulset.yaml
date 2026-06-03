@@ -14,6 +14,10 @@ spec:
       labels:
         app: neo4j
     spec:
+      # Neo4j reads every NEO4J_* env var as a config setting. K8s otherwise
+      # injects Docker-link vars (NEO4J_PORT_7687_TCP_PORT, ...) from the
+      # same-named Service, which fail Neo4j's strict config validation.
+      enableServiceLinks: false
       containers:
         - name: neo4j
           image: neo4j:5.26-community
