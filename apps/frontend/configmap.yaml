@@ -12,3 +12,4 @@ data:
   MINIO_PUBLIC_URL: "https://airbb.serghini.me/storage"
   LISTING_SERVICE_URL: "http://service-listing:8082"
   REVIEW_SERVICE_URL: "http://service-review:8086"
+  SUGGESTION_SERVICE_URL: "http://service-suggestion:8087"

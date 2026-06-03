@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-suggestion
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-suggestion
+  template:
+    metadata:
+      labels:
+        app: service-suggestion
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-suggestion
+          image: ghcr.io/my-airbnb/service-suggestion:dev-PLACEHOLDER
+          ports:
+            - containerPort: 8087
+          envFrom:
+            - configMapRef:
+                name: service-suggestion-config
+            - secretRef:
+                name: service-suggestion-secret
+            - secretRef:
+                name: rabbitmq-app-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "200m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          livenessProbe:
+            tcpSocket:
+              port: 8087
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8087
+            initialDelaySeconds: 30
+            periodSeconds: 5

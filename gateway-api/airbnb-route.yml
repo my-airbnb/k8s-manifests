@@ -64,6 +64,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/suggestions
+      backendRefs:
+        - name: service-suggestion
+          port: 8087
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat

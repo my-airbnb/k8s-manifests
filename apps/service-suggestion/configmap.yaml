@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-suggestion-config
+  namespace: airbnb
+data:
+  SERVER_PORT: "8087"
+  SPRING_PROFILES_ACTIVE: "prod"
+  SPRING_NEO4J_URI: "bolt://neo4j:7687"
+  SPRING_NEO4J_AUTHENTICATION_USERNAME: "neo4j"
+  SPRING_DATA_REDIS_HOST: "redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_DATA_REDIS_PASSWORD: "CHANGE_ME"
+  SPRING_RABBITMQ_HOST: "rabbitmq"
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_RABBITMQ_USERNAME: "airbnb"
