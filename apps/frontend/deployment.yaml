@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: frontend
-          image: ghcr.io/my-airbnb/frontend:dev-68c339b13c847eb99591c797972ad28fcbc2f491
+          image: ghcr.io/my-airbnb/frontend:dev-c451957a4f90fdfe101f5e9da0b7800cd0bed979
           ports:
             - containerPort: 3000
           envFrom:
