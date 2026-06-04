@@ -12,6 +12,7 @@ data:
       roles: [
         { role: 'readWrite', db: 'listing_db' },
         { role: 'readWrite', db: 'chat_db' },
-        { role: 'readWrite', db: 'notification_db' }
+        { role: 'readWrite', db: 'notification_db' },
+        { role: 'readWrite', db: 'wishlist_db' }
       ]
     });

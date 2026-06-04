@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-wishlist
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-wishlist
+  template:
+    metadata:
+      labels:
+        app: service-wishlist
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-wishlist
+          image: ghcr.io/my-airbnb/service-wishlist:dev-PLACEHOLDER
+          ports:
+            - containerPort: 8089
+          envFrom:
+            - configMapRef:
+                name: service-wishlist-config
+            - secretRef:
+                name: service-wishlist-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8089
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8089
+            initialDelaySeconds: 25
+            periodSeconds: 5

@@ -88,6 +88,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/wishlists
+      backendRefs:
+        - name: service-wishlist
+          port: 8089
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat
