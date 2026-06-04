@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: service-notification-config
+  namespace: airbnb
+data:
+  SERVER_PORT: "8088"
+  SPRING_PROFILES_ACTIVE: "prod"
+  SPRING_DATA_MONGODB_URI: "mongodb://mongo_user:CHANGE_ME@mongodb:27017/notification_db?authSource=admin"
+  SPRING_DATA_REDIS_HOST: "redis"
+  SPRING_DATA_REDIS_PORT: "6379"
+  SPRING_DATA_REDIS_PASSWORD: "CHANGE_ME"
+  SPRING_RABBITMQ_HOST: "rabbitmq"
+  SPRING_RABBITMQ_PORT: "5672"
+  SPRING_RABBITMQ_USERNAME: "airbnb"

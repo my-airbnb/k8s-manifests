@@ -80,6 +80,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/notifications
+      backendRefs:
+        - name: service-notification
+          port: 8088
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat
