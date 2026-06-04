@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-notification
-          image: ghcr.io/my-airbnb/service-notification:dev-PLACEHOLDER
+          image: ghcr.io/my-airbnb/service-notification:dev-f26291445de62e3439e2b7452e5236d658891921
           ports:
             - containerPort: 8088
           envFrom:
