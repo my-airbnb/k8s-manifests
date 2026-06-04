@@ -96,6 +96,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/availability
+      backendRefs:
+        - name: service-availability
+          port: 8090
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat

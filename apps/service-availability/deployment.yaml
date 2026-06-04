@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-availability
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-availability
+  template:
+    metadata:
+      labels:
+        app: service-availability
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-availability
+          image: ghcr.io/my-airbnb/service-availability:dev-PLACEHOLDER
+          ports:
+            - containerPort: 8090
+          envFrom:
+            - configMapRef:
+                name: service-availability-config
+            - secretRef:
+                name: service-availability-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 25
+            periodSeconds: 5
