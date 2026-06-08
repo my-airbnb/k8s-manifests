@@ -120,6 +120,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/coupons
+      backendRefs:
+        - name: service-coupon
+          port: 8093
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat
