@@ -104,6 +104,14 @@ spec:
     - matches:
         - path:
             type: PathPrefix
+            value: /api/v1/recently-viewed
+      backendRefs:
+        - name: service-recently-viewed
+          port: 8091
+
+    - matches:
+        - path:
+            type: PathPrefix
             value: /ws
       backendRefs:
         - name: service-chat

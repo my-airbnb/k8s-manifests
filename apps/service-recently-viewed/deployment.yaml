@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-recently-viewed
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-recently-viewed
+  template:
+    metadata:
+      labels:
+        app: service-recently-viewed
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-recently-viewed
+          image: ghcr.io/my-airbnb/service-recently-viewed:dev-b9c5ebacab352c02d1e28b098d4e07ab9ecbae7e
+          ports:
+            - containerPort: 8091
+          envFrom:
+            - configMapRef:
+                name: service-recently-viewed-config
+            - secretRef:
+                name: service-recently-viewed-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8091
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8091
+            initialDelaySeconds: 25
+            periodSeconds: 5
