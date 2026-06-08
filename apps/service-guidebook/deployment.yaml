@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-guidebook
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-guidebook
+  template:
+    metadata:
+      labels:
+        app: service-guidebook
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-guidebook
+          image: ghcr.io/my-airbnb/service-guidebook:dev-b9c5ebacab352c02d1e28b098d4e07ab9ecbae7e
+          ports:
+            - containerPort: 8092
+          envFrom:
+            - configMapRef:
+                name: service-guidebook-config
+            - secretRef:
+                name: service-guidebook-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8092
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8092
+            initialDelaySeconds: 25
+            periodSeconds: 5

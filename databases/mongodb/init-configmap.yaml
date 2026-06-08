@@ -15,6 +15,7 @@ data:
         { role: 'readWrite', db: 'notification_db' },
         { role: 'readWrite', db: 'wishlist_db' },
         { role: 'readWrite', db: 'availability_db' },
-        { role: 'readWrite', db: 'recentlyviewed_db' }
+        { role: 'readWrite', db: 'recentlyviewed_db' },
+        { role: 'readWrite', db: 'guidebook_db' }
       ]
     });
