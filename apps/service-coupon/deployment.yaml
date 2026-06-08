@@ -23,8 +23,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: service-coupon-config
+            # JWT signing key is shared cluster-wide; reuse the auth service's
+            # secret (its issuer) so all services validate tokens with one key.
             - secretRef:
-                name: service-coupon-secret
+                name: service-auth-secret
           resources:
             requests:
               memory: "256Mi"
