@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-qa
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-qa
+  template:
+    metadata:
+      labels:
+        app: service-qa
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-qa
+          image: ghcr.io/my-airbnb/service-qa:dev-f409f2cd7d626c5639f7f3e257570b2d3ad8d32d
+          ports:
+            - containerPort: 8094
+          envFrom:
+            - configMapRef:
+                name: service-qa-config
+            - secretRef:
+                name: service-qa-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8094
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8094
+            initialDelaySeconds: 25
+            periodSeconds: 5

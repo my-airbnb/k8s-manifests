@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: mongo-grant-coupon-db
+  name: mongo-grant-new-dbs
   namespace: airbnb
   annotations:
     # Run as an ArgoCD sync hook so it executes in-cluster, then clean up on success.
@@ -32,5 +32,5 @@ spec:
             - >
               mongosh "mongodb://${ROOT_USER}:${ROOT_PASS}@mongodb:27017/admin?authSource=admin"
               --quiet --eval
-              'db.getSiblingDB("admin").grantRolesToUser("mongo_user", [{ role: "readWrite", db: "coupon_db" }]);
-               print("granted readWrite on coupon_db to mongo_user");'
+              'db.getSiblingDB("admin").grantRolesToUser("mongo_user", [{ role: "readWrite", db: "coupon_db" }, { role: "readWrite", db: "qa_db" }]);
+               print("granted readWrite on coupon_db and qa_db to mongo_user");'

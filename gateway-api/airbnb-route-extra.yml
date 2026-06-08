@@ -1,0 +1,32 @@
+---
+# Overflow route: the Gateway API caps a single HTTPRoute at 16 rules, so newer
+# services live here. Rules from multiple HTTPRoutes on the same gateway/hostname
+# are merged by the gateway.
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: airbnb-route-extra
+  namespace: airbnb
+spec:
+  parentRefs:
+    - name: main-gateway
+      namespace: airbnb
+      sectionName: https-airbb
+  hostnames:
+    - "airbb.serghini.me"
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/coupons
+      backendRefs:
+        - name: service-coupon
+          port: 8093
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api/v1/qa
+      backendRefs:
+        - name: service-qa
+          port: 8094
