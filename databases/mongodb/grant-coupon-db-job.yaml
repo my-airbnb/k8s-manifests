@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-grant-coupon-db
+  namespace: airbnb
+  annotations:
+    # Run as an ArgoCD sync hook so it executes in-cluster, then clean up on success.
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  backoffLimit: 3
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: grant
+          image: mongo:7
+          env:
+            - name: ROOT_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: ROOT_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mongodb-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+          command: ["bash", "-c"]
+          args:
+            - >
+              mongosh "mongodb://${ROOT_USER}:${ROOT_PASS}@mongodb:27017/admin?authSource=admin"
+              --quiet --eval
+              'db.getSiblingDB("admin").grantRolesToUser("mongo_user", [{ role: "readWrite", db: "coupon_db" }]);
+               print("granted readWrite on coupon_db to mongo_user");'
