@@ -32,5 +32,5 @@ spec:
             - >
               mongosh "mongodb://${ROOT_USER}:${ROOT_PASS}@mongodb:27017/admin?authSource=admin"
               --quiet --eval
-              'db.getSiblingDB("admin").grantRolesToUser("mongo_user", [{ role: "readWrite", db: "coupon_db" }, { role: "readWrite", db: "qa_db" }]);
-               print("granted readWrite on coupon_db and qa_db to mongo_user");'
+              'db.getSiblingDB("admin").grantRolesToUser("mongo_user", [{ role: "readWrite", db: "coupon_db" }, { role: "readWrite", db: "qa_db" }, { role: "readWrite", db: "concierge_db" }]);
+               print("granted readWrite on coupon_db, qa_db, concierge_db to mongo_user");'

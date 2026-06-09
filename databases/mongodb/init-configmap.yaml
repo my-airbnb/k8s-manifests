@@ -18,6 +18,7 @@ data:
         { role: 'readWrite', db: 'recentlyviewed_db' },
         { role: 'readWrite', db: 'guidebook_db' },
         { role: 'readWrite', db: 'coupon_db' },
-        { role: 'readWrite', db: 'qa_db' }
+        { role: 'readWrite', db: 'qa_db' },
+        { role: 'readWrite', db: 'concierge_db' }
       ]
     });

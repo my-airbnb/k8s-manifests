@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-concierge
+  namespace: airbnb
+spec:
+  selector:
+    app: service-concierge
+  ports:
+    - port: 8095
+      targetPort: 8095
+  type: ClusterIP

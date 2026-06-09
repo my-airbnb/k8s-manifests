@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-concierge
+  namespace: airbnb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-concierge
+  template:
+    metadata:
+      labels:
+        app: service-concierge
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: service-concierge
+          image: ghcr.io/my-airbnb/service-concierge:dev-f409f2cd7d626c5639f7f3e257570b2d3ad8d32d
+          ports:
+            - containerPort: 8095
+          envFrom:
+            - configMapRef:
+                name: service-concierge-config
+            # Shared JWT signing key (issuer-owned) so tokens validate cluster-wide.
+            - secretRef:
+                name: service-auth-secret
+            # This service's own secret — the Gemini API key.
+            - secretRef:
+                name: service-concierge-secret
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "150m"
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+          livenessProbe:
+            tcpSocket:
+              port: 8095
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8095
+            initialDelaySeconds: 25
+            periodSeconds: 5
