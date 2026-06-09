@@ -17,7 +17,7 @@ spec:
         - name: ghcr-pull-secret
       containers:
         - name: service-concierge
-          image: ghcr.io/my-airbnb/service-concierge:dev-a01dce83e29339f4a410424d3c783cc41185147d
+          image: ghcr.io/my-airbnb/service-concierge:dev-3e45a8419e016ce7419aad525a40aa43720ec4a4
           ports:
             - containerPort: 8095
           envFrom:
