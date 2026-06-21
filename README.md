@@ -1,8 +1,21 @@
 # Airbnb Clone — Kubernetes Manifests (GitOps)
 
-GitOps source-of-truth for a production-style **Airbnb clone** built as a microservices
-platform on **k3s**. ArgoCD watches this repository (`infra` branch) and continuously
-reconciles the cluster to match it — every deploy is a git commit.
+## The problem
+
+Running a 15-service platform by hand doesn't scale. Manual `kubectl apply` is error-prone and
+non-repeatable, live environments **drift** from what's in source control, there's **no audit
+trail** of who changed what, and a lost node means manual recovery. How do you deploy and operate
+many moving parts **reliably, repeatably, and with a full history** — without babysitting the cluster?
+
+## The approach — GitOps
+
+This repository is the **single source of truth** for the cluster. ArgoCD continuously reconciles
+the live cluster to match what's committed here, which turns the problems above into guarantees:
+
+- **Every change is a reviewed git commit** — auditable and revertable, no out-of-band `kubectl`.
+- **No drift** — ArgoCD self-heals the cluster back to the declared state automatically.
+- **Repeatable & hands-off** — the same commit produces the same cluster, every time.
+- **Resilient** — a failed workload is reconciled back without manual intervention.
 
 > **Note:** credentials in this public repo are redacted to `CHANGE_ME`. Real values are
 > injected at runtime via **Bitnami Sealed Secrets** (encrypted in-repo) or rotated out of band.
