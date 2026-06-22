@@ -22,6 +22,39 @@ the live cluster to match what's committed here, which turns the problems above 
 
 ---
 
+## Challenges I faced (and how I solved them)
+
+Running 15+ services on a self-managed k3s cluster meant most of this did **not** work first try.
+The real engineering was here — each item below is a problem I actually hit and the fix that
+resolved it (traceable in the commit history):
+
+- **Spring Boot pods stuck in a restart loop.** `httpGet` actuator probes fired before the JVM had
+  finished booting, so Kubernetes kept killing healthy-but-slow pods. Switched the Java services'
+  liveness/readiness to `tcpSocket` probes and tuned the timings — slow startup no longer triggers
+  a kill loop.
+- **The Gateway API's hard 16-rule cap on a single `HTTPRoute`.** The platform grew past 15 services
+  and routing silently stopped accepting new rules; one path (`/api/v1/experiences`) was returning
+  **403** because it was unrouted. Split routing into a second `HTTPRoute` that merges on the same
+  gateway/host, instead of collapsing path prefixes and losing clarity.
+- **Neo4j crashing on config validation.** Kubernetes' default `enableServiceLinks` injects
+  `NEO4J_*` env vars for every service, which Neo4j parses as its own (invalid) config. Disabling
+  `enableServiceLinks` on the deployment stopped the injected vars from breaking startup.
+- **The data-seeder kept getting OOMKilled** on large CSV imports. Raised its memory limit
+  (→ 768Mi → 1Gi) and loosened the liveness probe period/threshold so a long seed run isn't
+  mistaken for a hang.
+- **Sealed secrets that silently didn't match.** Recreating the cluster rotated the sealing key,
+  invalidating every existing `SealedSecret`; and new services were sealed against a placeholder
+  that didn't match the real JWT issuer, so auth failed at runtime. Fix: reseal all secrets against
+  the **current** cluster certificate and share the one real auth JWT secret across services.
+- **`ImagePullBackOff` on private images.** `imagePullSecrets` was placed incorrectly across
+  deployments and the GHCR token expired. Corrected the secret wiring everywhere and set up token
+  refresh.
+- **ArgoCD fighting itself.** A `Job`'s immutable `spec.template` blocked re-sync (fixed with
+  `Replace=true`), and stray finalizers / `ServerSideApply` produced permanent diffs. Cleaned up the
+  Application (directory recurse, removed invalid fields) so sync stays green.
+
+---
+
 ## Architecture
 
 ```
